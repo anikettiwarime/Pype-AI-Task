@@ -1,7 +1,7 @@
 "use client";
-import "../globals.css";
+import "../../globals.css";
 import React, { useEffect, useState } from "react";
-import { getWeatherData } from "../../utils/lib"; // Replace with the actual utility function for fetching weather data
+import { getWeatherData } from "../../../utils/lib"; // Replace with the actual utility function for fetching weather data
 
 interface WeatherData {
   coord: {

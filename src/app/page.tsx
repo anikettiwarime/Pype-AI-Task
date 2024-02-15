@@ -39,7 +39,7 @@ const HomePage: React.FC = () => {
         <div className="mt-8">
           <Link
             href={{
-              pathname: `/${weatherData.name}`,
+              pathname: `/details/${weatherData.name}`,
             }}
           >
             <WeatherComponent data={weatherData} />

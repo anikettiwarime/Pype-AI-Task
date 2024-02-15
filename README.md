@@ -1,36 +1,60 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Weather Application
 
-## Getting Started
+This weather application, built with Next.js, utilizes the OpenWeatherMap API to automatically detect and display current weather conditions based on the user's location.
 
-First, run the development server:
+## Project Structure
+
+- **Home Page:** The landing page, automatically detecting and displaying weather conditions for the user's location.
+- **Search Page:** Allows users to manually search and view weather details for specific locations.
+- **Details Page:** Provides more detailed information about the weather, including temperature, humidity, wind speed, and description.
+
+## Setup
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/anikettiwarime/pype-ai-task.git
+```
+
+2. Navigate to the project directory:
+
+```bash
+cd pype-ai-task
+```
+
+3. Install dependencies:
+
+```bash
+npm install
+```
+
+## Running the Application
+
+To run the application locally, use the following command:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Visit [http://localhost:3000](http://localhost:3000) in your web browser to access the application.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Features
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- **Automatic Location Detection:** The home page automatically detects and displays weather conditions for the user's location.
+- **Dynamic Routing:** The application uses dynamic routing to navigate to the search page based on the user's input.
 
-## Learn More
+- **OpenWeatherMap API:** Connects to the OpenWeatherMap API to fetch and display current weather conditions.
 
-To learn more about Next.js, take a look at the following resources:
+- **Error Handling:** Basic error handling is implemented for cases where the user enters an invalid location or if there is an issue with the API request.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Styling:** Basic styling has been applied for a clean and responsive design.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Bonus Features (Optional)
 
-## Deploy on Vercel
+- **Temperature Units:** Users can switch between Celsius and Fahrenheit for temperature display.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Deployment
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+The application is deployed on Vercel and can be accessed at [Weather Application](https://pype-ai-task.vercel.app/).
+
+Feel free to explore the code and make improvements! If you have any questions or feedback, please contact me at [LinkedIn](https://www.linkedin.com/in/anikettiwarime/).
