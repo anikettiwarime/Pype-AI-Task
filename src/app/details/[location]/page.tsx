@@ -1,7 +1,7 @@
 "use client";
 import "../../globals.css";
 import React, { useEffect, useState } from "react";
-import { getWeatherData } from "../../../utils/lib"; // Replace with the actual utility function for fetching weather data
+import { getWeatherData, fiveDayForecastData } from "../../../utils/lib"; // Replace with the actual utility function for fetching weather data
 
 interface WeatherData {
   coord: {
@@ -51,15 +51,31 @@ interface PageProps {
   };
 }
 
+interface FiveDayForecastListData {
+  main: {
+    temp_min: number;
+    temp_max: number;
+  };
+  dt: number;
+}
+
+interface FiveDayForecastData {
+  list: FiveDayForecastListData[];
+}
+
 const WeatherPage: React.FC<PageProps> = ({ params }) => {
   const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
+  const [fiveDayForecast, setFiveDayForecast] =
+    useState<FiveDayForecastData | null>(null);
   const [temperatureUnit, setTemperatureUnit] = useState<string>("Celsius");
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const data = await getWeatherData(params.location);
+        const forecastData = await fiveDayForecastData(params.location);
         setWeatherData(data);
+        setFiveDayForecast(forecastData);
       } catch (error) {
         console.error("Error fetching weather data:", error);
       }
@@ -83,7 +99,7 @@ const WeatherPage: React.FC<PageProps> = ({ params }) => {
 
   return (
     <div className="container mx-auto p-4">
-      {weatherData ? (
+      {weatherData && fiveDayForecast ? (
         <div>
           <h1 className="text-3xl font-semibold mb-4">
             Weather in {weatherData.name}, {weatherData.sys.country}
@@ -97,6 +113,7 @@ const WeatherPage: React.FC<PageProps> = ({ params }) => {
               {temperatureUnit === "Celsius" ? "Fahrenheit" : "Celsius"}
             </button>
           </div>
+          {/* Current Temparature */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             <div className="bg-gray-100 p-4 rounded-md">
               <p className="text-lg font-semibold">Temperature</p>
@@ -164,6 +181,53 @@ const WeatherPage: React.FC<PageProps> = ({ params }) => {
               <p>
                 {new Date(weatherData.sys.sunset * 1000).toLocaleTimeString()}
               </p>
+            </div>
+          </div>
+
+          <div>
+            <h2 className="text-2xl font-semibold mt-6 mb-4">5-Day Forecast</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+              {fiveDayForecast.list.flatMap((forecastItem, index) => {
+                if (new Date(forecastItem.dt * 1000).getUTCHours() === 6) {
+                  const forecastDate = new Date(forecastItem.dt * 1000);
+
+                  const formattedDateTime = forecastDate.toLocaleDateString(
+                    "en-US",
+                    {
+                      weekday: "long",
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    }
+                  );
+
+                  return (
+                    <div key={index} className="bg-gray-100 p-4 rounded-md">
+                      <p className="text-lg font-semibold">
+                        Date : {formattedDateTime}
+                      </p>
+                      <p>
+                        Min Temperature:{" "}
+                        {convertTemperature(
+                          forecastItem.main.temp_min,
+                          temperatureUnit
+                        )}{" "}
+                        {temperatureUnit === "Celsius" ? "°C" : "°F"}
+                      </p>
+                      <p>
+                        Max Temperature:{" "}
+                        {convertTemperature(
+                          forecastItem.main.temp_max,
+                          temperatureUnit
+                        )}{" "}
+                        {temperatureUnit === "Celsius" ? "°C" : "°F"}
+                      </p>
+                    </div>
+                  );
+                } else {
+                  return [];
+                }
+              })}
             </div>
           </div>
         </div>

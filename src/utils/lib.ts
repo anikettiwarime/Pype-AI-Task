@@ -16,3 +16,9 @@ export async function fetchUserLocation() {
     })
     .catch((err) => console.log(err));
 }
+
+export async function fiveDayForecastData(location: string) {
+  return fetch(
+    `https://api.openweathermap.org/data/2.5/forecast?q=${location}&appid=${process.env.NEXT_PUBLIC_WEATHER_API_KEY}&units=metric`
+  ).then((res) => res.json());
+}
