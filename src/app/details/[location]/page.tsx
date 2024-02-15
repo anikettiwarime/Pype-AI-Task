@@ -2,6 +2,7 @@
 import "../../globals.css";
 import React, { useEffect, useState } from "react";
 import { getWeatherData, fiveDayForecastData } from "../../../utils/lib"; // Replace with the actual utility function for fetching weather data
+import Link from "next/link";
 
 interface WeatherData {
   coord: {
@@ -104,15 +105,35 @@ const WeatherPage: React.FC<PageProps> = ({ params }) => {
           <h1 className="text-3xl font-semibold mb-4">
             Weather in {weatherData.name}, {weatherData.sys.country}
           </h1>
-          <div className="mb-4">
-            <button
-              className="bg-blue-500 text-white px-4 py-2 rounded"
-              onClick={toggleTemperatureUnit}
+          <div className="mb-4 flex justify-between">
+            <Link
+              href="/"
+              className="inline-block bg-teal-500 text-white px-4 py-2 rounded hover:bg-teal-700 transition duration-300"
             >
-              Switch to{" "}
-              {temperatureUnit === "Celsius" ? "Fahrenheit" : "Celsius"}
-            </button>
+              Back to Home
+            </Link>
+            <label className="inline-flex items-center cursor-pointer">
+              <input
+                type="checkbox"
+                className="sr-only peer"
+                checked={temperatureUnit === "Fahrenheit"}
+                onChange={toggleTemperatureUnit}
+              />
+              <div
+                className={`
+      relative w-11 h-6 rounded-full peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-teal-600 ${
+        temperatureUnit === "Fahrenheit"
+          ? "bg-gray-200"
+          : "bg-transparent border-teal-500 border"
+      }`}
+              ></div>
+              <span className="ms-3 text-sm font-medium text-gray-900">
+                Switch to{" "}
+                {temperatureUnit === "Celsius" ? "Fahrenheit" : "Celsius"}
+              </span>
+            </label>
           </div>
+
           {/* Current Temparature */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             <div className="bg-gray-100 p-4 rounded-md">
@@ -204,7 +225,7 @@ const WeatherPage: React.FC<PageProps> = ({ params }) => {
                   return (
                     <div key={index} className="bg-gray-100 p-4 rounded-md">
                       <p className="text-lg font-semibold">
-                        Date : {formattedDateTime}
+                        {formattedDateTime}
                       </p>
                       <p>
                         Min Temperature:{" "}
